@@ -1,0 +1,4 @@
+{
+  "log_level": "debug",
+  "log_file_name":  "app.log"
+}
