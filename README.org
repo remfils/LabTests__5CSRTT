@@ -1,0 +1,75 @@
+* Information
+
+This is a GUI WinForms (windows platform only) program for running
+automated tests using Maze Engineers *Five Choice Serial Reaction Time
+Task* (5CSRTT) apparatus ([[https://conductscience.com/maze/portfolio/five-choice-serial-reaction-time-task-5csrtt/][more about device]]).
+
+All experiment protocols are written in C#. Different protocols can
+have dynamic list of variables, that control how experiment is
+performed (ITI duration, randomness factor and etc.).
+
+All available COM interface commands are supported
+
+- Cue lights control
+- Panel cue lights control
+- House light control
+- Drop pelets
+- On/Off shocker
+- Set shocker current
+
+Registered events
+
+- Pelet dropped
+- Nose poke in cue lights
+- Nose poke in pellet
+
+After experiment is done all events data can be exported into csv.
+
+** About device
+
+The 5CSRTT apparatus consists of an operant conditioning chamber with
+2 Plexiglas sidewalls; the aluminum front wall is rounded and contains
+five nose poke apertures (2.5 x 2.2 x 2.2 cm each, 2 cm above the
+floor)
+
+All communication is done via COM port connection. More about messages
+transfered via COM port (docs/5CSRTT interface_20220120_User
+(1).xlsx).
+
+More information about the device:
+
+https://conductscience.com/maze/portfolio/five-choice-serial-reaction-time-task-5csrtt/
+
+* Setup and settings
+
+Connection to 5CSRTT apparatus has to be established, before making
+running any protocols.
+
+For this COM port drivers have to be installed and COM device has to be visible
+in devices list. If everything is ok device under name COM[X] (where X
+is a number) will be displayed in the dropdown above the connect
+button in the main form window.
+
+
+* Adding new protocols
+
+Protocols are added by implementing =IProtocol_5CSRTT= interface. See provied protocols for examples
+
+- =GetId()= - unique protocol id in system
+- =GetName()= - name for the protocol in dropdown list
+- =GetDescription()= - protocol description. Will be displayed in the
+  UI under "Protocol Description" tab
+
+To specify which variables will be used in protocol these methods must
+be implemented.
+
+- =GetProtocolDefaultParameterValues()=
+- =GetProtocolParameterValues()=
+- =SetParametersFromDictionary()=
+
+All logic to run protocols is implemented in these methods
+
+- =StartProtocolThread=
+- =StopProtocolThread=
+
+To listen for device COM events subscribe to this event listener =RegisterEvent=
